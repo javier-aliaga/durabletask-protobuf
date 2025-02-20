@@ -191,6 +191,8 @@ message OrchestrationMetadata {
   google.protobuf.StringValue output = 7;
   google.protobuf.StringValue customStatus = 8;
   TaskFailureDetails failureDetails = 9;
+  google.protobuf.Timestamp completedAt = 10;
+  string parentInstanceId = 11;
 }
 
 message WorkflowStateMetadata {

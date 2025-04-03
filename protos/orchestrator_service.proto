@@ -124,7 +124,7 @@ message SubOrchestrationInstanceFailedEvent {
 
 message TimerCreatedEvent {
     google.protobuf.Timestamp fireAt = 1;
-    string name = 2;
+    optional string name = 2;
 }
 
 message TimerFiredEvent {
@@ -213,7 +213,7 @@ message CreateSubOrchestrationAction {
 
 message CreateTimerAction {
     google.protobuf.Timestamp fireAt = 1;
-    string name = 2;
+    optional string name = 2;
 }
 
 message SendEventAction {

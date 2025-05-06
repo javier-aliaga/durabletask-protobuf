@@ -796,7 +796,7 @@ message RerunWorkflowFromEventRequest {
   // written with input. This is required because of the incorrect typing of
   // inputs being `StringValue` which cannot be optional, and therefore no nil
   // value can be signalled or overwritten.
-  bool overwrite_input = 5;
+  bool overwriteInput = 5;
 }
 
 // RerunWorkflowFromEventResponse is the response to executing

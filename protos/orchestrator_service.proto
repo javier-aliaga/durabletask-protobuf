@@ -665,16 +665,16 @@ service TaskHubSidecarService {
 
     // Waits for an orchestration instance to reach a running or completion state.
     rpc WaitForInstanceStart(GetInstanceRequest) returns (GetInstanceResponse);
-    
+
     // Waits for an orchestration instance to reach a completion state (completed, failed, terminated, etc.).
     rpc WaitForInstanceCompletion(GetInstanceRequest) returns (GetInstanceResponse);
 
     // Raises an event to a running orchestration instance.
     rpc RaiseEvent(RaiseEventRequest) returns (RaiseEventResponse);
-    
+
     // Terminates a running orchestration instance.
     rpc TerminateInstance(TerminateRequest) returns (TerminateResponse);
-    
+
     // Suspends a running orchestration instance.
     rpc SuspendInstance(SuspendRequest) returns (SuspendResponse);
 
@@ -720,6 +720,9 @@ service TaskHubSidecarService {
 
     // Abandon an entity work item
     rpc AbandonTaskEntityWorkItem(AbandonEntityTaskRequest) returns (AbandonEntityTaskResponse);
+
+    // Rerun a Workflow from a specific event ID of a workflow instance.
+    rpc RerunWorkflowFromEvent(RerunWorkflowFromEventRequest) returns (RerunWorkflowFromEventResponse);
 }
 
 message GetWorkItemsRequest {
@@ -769,4 +772,35 @@ message StreamInstanceHistoryRequest {
 
 message HistoryChunk {
     repeated HistoryEvent events = 1;
+}
+
+// RerunWorkflowFromEventRequest is used to rerun a workflow instance from a
+// specific event ID.
+message RerunWorkflowFromEventRequest {
+  // sourceInstanceID is the orchestration instance ID to rerun. Can be a top
+  // level instance, or sub-orchestration instance.
+  string sourceInstanceID = 1;
+
+  // the event id to start the new workflow instance from.
+  uint32 eventID = 2;
+
+  // newInstanceID is the new instance ID to use for the new workflow instance.
+  // Not optional, and must not be the same ID.
+  string newInstanceID = 3;
+
+  // input can optionally given to give the new instance a different input to
+  // the next Activity event.
+  google.protobuf.StringValue input = 4;
+
+  // overwrite_input signals that the input to the rerun activity should be
+  // written with input. This is required because of the incorrect typing of
+  // inputs being `StringValue` which cannot be optional, and therefore no nil
+  // value can be signalled or overwritten.
+  bool overwrite_input = 5;
+}
+
+// RerunWorkflowFromEventResponse is the response to executing
+// RerunWorkflowFromEvent.
+message RerunWorkflowFromEventResponse {
+    string newInstanceID = 1;
 }

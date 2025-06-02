@@ -15,7 +15,7 @@ syntax = "proto3";
 
 package durabletask.protos.backend.v1;
 
-option csharp_namespace = "Microsoft.DurableTask.Protobuf";
+option csharp_namespace = "Dapr.DurableTask.Protobuf";
 option java_package = "io.dapr.durabletask.implementation.protobuf";
 option go_package = "/api/protos";
 

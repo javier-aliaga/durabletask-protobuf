@@ -104,6 +104,11 @@ message CreateInstanceRequest {
     google.protobuf.StringValue executionId = 7;
     map<string, string> tags = 8;
     TraceContext parentTraceContext = 9;
+
+    // When true, the request fails with an ALREADY_EXISTS error if a workflow
+    // instance with the same instanceId already exists, whether active or
+    // completed. When false, an existing completed instance is restarted.
+    bool enforceUniqueInstanceId = 10;
 }
 
 message CreateInstanceResponse {
